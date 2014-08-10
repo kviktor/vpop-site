@@ -1,0 +1,74 @@
+#company-list table td:first-child img {
+  max-width: 50px;
+}
+
+#company-list table td,
+#citizen-fights-list table td,
+#toplist table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+
+#company-list table td:first-child {
+  background: #FFF;
+}
+
+#company-profile-left,  
+#citizen-profile-left {
+  float: left;
+}
+
+#company-profile-left img,
+#citizen-profile-left img {
+  max-width: 100px;
+}
+
+.country-logo {
+  width: 25px;
+}
+
+#company-input-group,
+#citizen-input-group,
+#show-input-group {
+  max-width: 400px;
+}
+
+#company-profile-right,
+#citizen-profile-right {
+  padding-left: 120px;
+}
+
+#company-profile, #company-list,
+#citizen-profile, #citizen-fights-list {
+  display: none;
+}
+
+tfoot td .input-group:nth-child(2) {
+  margin-top: 8px;
+}
+
+.label-width {
+  width: 100px;
+}
+
+#add-fight {
+  margin-bottom: 20px;
+}
+
+#citizen-fights-list td:first-child {
+  width: 25px;
+}
+
+#toplist tbody td:first-child {
+  width: 120px;
+}
+
+#toplist tbody td:nth-child(2) {
+  width: 170px;
+}
+
+#toplist tbody td:first-child img{
+  max-width: 100px;
+  max-height: 100px;
+}
