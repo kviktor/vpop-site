@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h3>vPopulus Company Calculator</h3>
+    <p>
+      Placeholder text
+    </p>
+  </div>
+  <form>
+    <div class="input-group" id="company-input-group">
+      <input class="form-control" type="text" id="company-id" placeholder="Company ID">
+      <div class="input-group-btn">
+        <button class="btn btn-info" id="company-id-submit" type="submit">Calculate</button>
+      </div>
+    </div>
+  </form>
+  <hr />
+  <div id="company-profile">
+    <div id="company-profile-left">
+      <img/>
+    </div>
+    <div id="company-profile-right">
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div id="company-list">
+    <hr />
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <td colspan="2">Name</td>
+          <td>Wellness</td>
+          <td>Skill</td>
+          <td>Production</td>
+          <td>Units</td>
+          <td class="column-raws">Raws</td>
+          <td>Salary</td>
+          <td>Sales</td>
+          <td class="column-raws">Raws price</td>
+          <td>Profit</td>
+        <tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">
+            <div class="input-group">
+              <span class="input-group-addon label-width">
+                Unit price
+              </span>
+            <input type="text" class="form-control input-sm" id="unit-price"/>
+            </div>
+            <div class="input-group column-raws">
+              <span class="input-group-addon label-width">
+                Raw price
+              </span>
+            <input type="text" class="form-control input-sm" id="raw-price"/>
+            </div>
+          </td>
+          <td>SUM</td>
+          <td> 
+            <div class="btn btn-sm btn-info" id="sum-prod"></div>
+          </td>
+          <td>
+            <div class="btn btn-sm btn-info" id="sum-units"></div>
+          </td>
+          <td class="column-raws">
+            <div class="btn btn-sm btn-info" id="sum-raws"></div>
+          </td>
+          <td>
+            <div class="btn btn-sm btn-warning" id="sum-salary"></div>
+          </td>
+          <td>
+            <div class="btn btn-sm btn-primary" id="sum-sales"></div>
+          </td>
+          <td class="column-raws">
+            <div class="btn btn-sm btn-warning" id="sum-raws-price"></div>
+          </td>
+          <td>
+            <div class="btn btn-sm btn-success" id="sum-profit"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>      
+    <a href="#" class="btn btn-primary pull-right" id="add-worker"/>Add worker</a>
+    <div class="clearfix"></div>
+  </div>
+  <hr />
+  <h3>Notes</h3>
+  <ul>
+    <li>Datas from the vPopulus API are not always up to date!</li>
+    <li>My production formula is wrong atm.
+      <ul>
+        <li>The calculations don't take worker limits into consideration.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/company.js') }}"></script>
+
+{% endblock %}

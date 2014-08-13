@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="header">
+    <h3>vPopulus Toplist</h3>
+    <p>
+      Placeholder text
+    </p>
+  </div>
+  <form>
+    <div class="input-group" id="show-input-group">
+      <select class="form-control" id="toplist-type">
+        <option value="experience.points">Experience</option>
+        <option value="military.strength">Strength</option>
+        <option value="military.rank-points">Rank points</option>
+        <option value="skills.manu">Manufacturing</option>
+        <option value="skills.land">Land</option>
+        <option value="skills.cons">Construction</option>
+      </select>
+      <div class="input-group-btn">
+        <button class="btn btn-info" id="show-submit" type="submit">Show</button>
+      </div>
+    </div>
+  </form>
+  <div id="toplist">
+    <table class="table">
+      <thead>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        <tr>
+      </thead>
+      <tbody></tbody>
+    </table>      
+  </div>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='js/common.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/top.js') }}"></script>
+
+{% endblock %}

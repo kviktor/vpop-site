@@ -6,6 +6,31 @@ from helpers import get_battle_datas
 app = Flask(__name__)
 
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+@app.route("/fight/")
+def fight():
+    return render_template("fight.html")
+
+
+@app.route("/top/")
+def top():
+    return render_template("top.html")
+
+
+@app.route("/company/")
+def company():
+    return render_template("company.html")
+
+
+@app.route("/battle/")
+def battle2():
+    return render_template("battle.html")
+
+
 @app.route("/battle/<int:battle_id>")
 def battle(battle_id):
     bd = get_battle_datas(battle_id)

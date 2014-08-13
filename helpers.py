@@ -1,4 +1,6 @@
+from collections import OrderedDict
 from datetime import datetime
+
 import requests
 
 fight_url = "http://api.vpopulus.net/v1/feeds/battle/fights.json?id=%d&page=%d"
@@ -32,8 +34,6 @@ def get_fights(battle_id):
 
     return fights
 
-from collections import OrderedDict
-
 
 def get_fighter_toplist(battle, fights):
     sides = {
@@ -66,6 +66,10 @@ def get_fighter_toplist(battle, fights):
         'side_d': OrderedDict(sorted(sides['side_d'].iteritems(), reverse=True,
                                      key=lambda x: x[1]['damage']))
     }
+    sides = {
+        'side_a': [v for k, v in sides['side_a'].items()],
+        'side_d': [v for k, v in sides['side_d'].items()],
+    }
     return sides
 
 
@@ -96,12 +100,12 @@ def get_battle_datas(battle_id):
     collection = MongoClient().vpop.battles
     result = collection.find_one({'battle_id': battle_id})
     if result:
+        print result['toplist']
         return result
     fights = get_fights(battle_id)
     battle = get_battle_info(battle_id)
     chart = get_chart_data(battle, fights)
     toplist = get_fighter_toplist(battle, fights)
-    print toplist
 
     data = {
         'battle_id': battle_id,

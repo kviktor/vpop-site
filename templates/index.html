@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="header">
+    <h2>vPopulus Tools</h2>
+    <p>
+      <a href="/company/" class="btn btn-success">
+        Company production calculator
+      </a>
+    </p>
+    <p>
+      <a href="/fight/" class="btn btn-danger">
+        Fight damage calculator
+      </a>
+    </p>
+    <p>
+      <a href="/top/" class="btn btn-primary">
+        Rankings top list (xp, skill, strength, rank)
+      </a>
+    </p>
+    <p>
+      <form>
+        <div class="input-group" style="max-width: 300px;">
+          <input class="form-control" placeholder="Battle ID"/>
+          <div class="input-group-btn">
+          <button class="btn btn-warning" id="clickme">
+            Show battle stats
+          </button>
+          </div>
+        </div>
+      </form>
+      <script>
+        $(function() {
+          $("form").submit(function() {
+            var b = $(this).parent("div").parent("div").find("input").val();
+            if(!b) return false;
+            window.location.href = "/battle/" + b;
+            return false;
+          });
+        });
+      </script>
+    </p>
+  </div>
+{% endblock %}

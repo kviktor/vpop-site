@@ -72,3 +72,16 @@ tfoot td .input-group:nth-child(2) {
   max-width: 100px;
   max-height: 100px;
 }
+
+#index-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 5px;
+  border-bottom-left-radius: 8px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+#index-link:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
