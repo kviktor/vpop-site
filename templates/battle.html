@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Highcharts Example</title>
+    <title>Battle</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript">
@@ -79,13 +81,34 @@ $(function () {
   </h2>
   <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-  <h1>
-    <p>
-      Attacker side: {{ battle.att_side }} fights
-    </p>
-    <p>
-      Defender side: {{ battle.def_side }} fights
-    </p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3>Attacker side: {{ battle.att_side }} fights</h3>
+      <hr />
+        {% for f in toplist.side_a.iteritems() %}
+          <p>
+            {{ f.1.damage }} 
+            - <a href="http://www.vpopulus.net/citizen/{{ f.1.citizen.id }}">{{ f.1.citizen.name }}</a>
+          </p>
+        {% endfor %}
+
+    </div>
+    <div class="col-sm-6">
+      <h3>Defender side: {{ battle.def_side }} fights</h3>
+      <hr />
+        {% for f in toplist.side_d.iteritems() %}
+          <p>
+            {{ f.1.damage }} 
+            - <a href="http://www.vpopulus.net/citizen/{{ f.1.citizen.id }}">{{ f.1.citizen.name }}</a>
+          </p>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
 
   <style>
     .highcharts-legend-item {display: none;}

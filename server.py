@@ -1,16 +1,16 @@
 from flask import Flask, render_template, jsonify
 import requests
 
-from helpers import get_battle_info, get_chart_data
+from helpers import get_battle_datas
 
 app = Flask(__name__)
 
 
 @app.route("/battle/<int:battle_id>")
-def index(battle_id):
-    b = get_battle_info(battle_id)
-    chart_data = get_chart_data(b, battle_id)
-    return render_template("battle.html", chart_data=chart_data, battle=b)
+def battle(battle_id):
+    bd = get_battle_datas(battle_id)
+    return render_template("battle.html", chart_data=bd['chart'],
+                           battle=bd['battle'], toplist=bd['toplist'])
 
 
 API_URL = "http://api.vpopulus.net/v1/feeds/"

@@ -17,7 +17,6 @@ def get_battle_info(battle_id):
 
 
 def get_fights(battle_id):
-    print "szio"
     fights = []
     current_page = 1
     pages = 2
@@ -33,30 +32,44 @@ def get_fights(battle_id):
 
     return fights
 
+from collections import OrderedDict
 
-def create_stats(battle, battle_id):
-    stats = {}
-    fights = get_fights(battle_id)
+
+def get_fighter_toplist(battle, fights):
+    sides = {
+        'side_a': OrderedDict(),
+        'side_d': OrderedDict(),
+    }
     for f in fights:
-        citizen_id = f['citizen']['id']
-        if citizen_id not in stats:
-            stats[citizen_id] = {
+        if f['side-id'] == battle['attacker']['id']:
+            side = "side_a"
+        else:
+            side = "side_d"
+
+        citizen_id = str(f['citizen']['id'])  # for mongodb
+        if citizen_id not in sides[side]:
+            sides[side][citizen_id] = {
                 'citizen': f['citizen'],
                 'fights': [],
-                'side_%d' % battle['attacker']['id']: 0,
-                'side_%d' % battle['defender']['id']: 0,
+                'damage': 0,
+
             }
 
         tmp = f
         del tmp['citizen']
-        stats[citizen_id]['fights'].append(tmp)
-        stats[citizen_id]['side_%d' % f['side-id']] += float(f['damage'])
+        sides[side][citizen_id]['fights'].append(tmp)
+        sides[side][citizen_id]['damage'] += float(f['damage'])
 
-    return stats
+    sides = {
+        'side_a': OrderedDict(sorted(sides['side_a'].iteritems(), reverse=True,
+                                     key=lambda x: x[1]['damage'])),
+        'side_d': OrderedDict(sorted(sides['side_d'].iteritems(), reverse=True,
+                                     key=lambda x: x[1]['damage']))
+    }
+    return sides
 
 
-def get_chart_data(battle, battle_id):
-    fights = get_fights(battle_id)
+def get_chart_data(battle, fights):
     chart_data = []
     wall = battle['objectives']['secure']
     attacker = battle['attacker']['id']
@@ -76,3 +89,29 @@ def get_chart_data(battle, battle_id):
         })
 
     return chart_data
+
+
+def get_battle_datas(battle_id):
+    from pymongo import MongoClient
+    collection = MongoClient().vpop.battles
+    result = collection.find_one({'battle_id': battle_id})
+    if result:
+        return result
+    fights = get_fights(battle_id)
+    battle = get_battle_info(battle_id)
+    chart = get_chart_data(battle, fights)
+    toplist = get_fighter_toplist(battle, fights)
+    print toplist
+
+    data = {
+        'battle_id': battle_id,
+        'fights': fights,
+        'battle': battle,
+        'chart': chart,
+        'toplist': toplist,
+    }
+
+    if not battle['is_active']:
+        collection.insert(data)
+
+    return data
