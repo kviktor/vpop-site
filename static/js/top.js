@@ -30,8 +30,9 @@ function createBar(citizen) {
   return html;
 }
 
-function createToplistRow(citizen) {
+function createToplistRow(citizen, num) {
   row = "<tr>";
+  row += "<td>" + num + "</td>";
   row += '<td><img src="' + citizen['avatar-link'] + '"/></td>';
   row += '<td><img src="' + flagURL(citizen['citizenship']['country']['name']) + '"/> ';
   row += '<a href="http://vpopulus.net/citizen/' + citizen['id'] + '">' + citizen['name'] + '</a></td>';
@@ -43,8 +44,10 @@ function createToplistRow(citizen) {
 
 function createToplistTable() {
   var html = "";
+  var num = 1;
   for(c in citizens) {
-    html += createToplistRow(citizens[c]);
+    html += createToplistRow(citizens[c], num);
+    num++;
   }
   $("#toplist table tbody").html(html);
 }

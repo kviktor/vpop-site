@@ -61,14 +61,18 @@ tfoot td .input-group:nth-child(2) {
 }
 
 #toplist tbody td:first-child {
-  width: 120px;
+  width: 20px;
 }
 
 #toplist tbody td:nth-child(2) {
+  width: 120px;
+}
+
+#toplist tbody td:nth-child(3) {
   width: 170px;
 }
 
-#toplist tbody td:first-child img{
+#toplist tbody td:nth-child(2) img{
   max-width: 100px;
   max-height: 100px;
 }
