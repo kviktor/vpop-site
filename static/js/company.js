@@ -121,10 +121,8 @@ function createProfile() {
   html += '<a href="http://vpopulus.net/region/' + company['location']['region']['id'] + '">' + company['location']['region']['name'] + "</a>"
   html += " / ";
   html += '<a href="http://vpopulus.net/country/' + company['location']['country']['id'] + '">' + company['location']['country']['name'] + "</a>"
-  html += ' <img class="country-logo" src="http://www.vpopulus.net/Resources/country_flags/XL/' + 
-          company['location']['country']['name'].replace(" ", "-") + '.png"/>';
+  html += ' <img class="country-logo" src="' + flagURL(company['location']['country']['name']) + '"/>';
   html += "</p>";
-  html += '<p><img src="http://www.vpopulus.net/Resources/images/icons/company/quality/q' + company['quality'] + '.png"/></p>';
 
   $("#company-profile-right").html(html);
 }
@@ -168,7 +166,7 @@ function createTableRow(worker) {
 
 function addDefaultWorker() {
   fake_worker = {
-    'avatar-link': "http://www.vpopulus.net/Resources/avatars/citizen/def.jpg",
+    'avatar-link': getDefaultUserAvatar(),
     'name': "Default Worker",
     'id': 1,
     'wellness': 98,

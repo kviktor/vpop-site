@@ -19,3 +19,7 @@ function makeTitle(string) {
 function flagURL(country) {
   return "http://www.vpopulus.net/assets/img/fla/S/" + country.replace(/ /g, '-') + ".png";
 }
+
+function getDefaultUserAvatar() {
+  return "http://www.vpopulus.net/assets/others/avatars/citizen/def.gif";
+}
