@@ -1,7 +1,7 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 import requests
 
-from helpers import get_battle_datas
+from helpers import get_battle_datas, get_active_battles
 
 app = Flask(__name__)
 
@@ -27,8 +27,15 @@ def company():
 
 
 @app.route("/battle/")
-def battle2():
-    return render_template("battle.html")
+def battle_list():
+    battle_id = request.args.get("battle_id")
+    if battle_id:
+        return redirect(url_for("battle", battle_id=battle_id))
+
+    battles = get_active_battles()
+    return render_template("battle_list.html",
+                           active=battles['active_battles'],
+                           latest=battles['latest_battles'])
 
 
 @app.route("/battle/<int:battle_id>")

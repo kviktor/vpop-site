@@ -5,6 +5,7 @@ import requests
 
 fight_url = "http://api.vpopulus.net/v1/feeds/battle/fights.json?id=%d&page=%d"
 battle_url = "http://api.vpopulus.net/v1/feeds/battle.json?id=%d"
+active_battles_url = "http://api.vpopulus.net/v1/feeds/active-battles.json"
 
 
 def get_battle_info(battle_id):
@@ -26,7 +27,6 @@ def get_fights(battle_id):
     while current_page <= pages:
         r = requests.get(fight_url % (battle_id, current_page))
         json_data = r.json()
-
         fights.extend(json_data['fights'])
 
         pages = json_data['pages']
@@ -100,7 +100,6 @@ def get_battle_datas(battle_id):
     collection = MongoClient().vpop.battles
     result = collection.find_one({'battle_id': battle_id})
     if result:
-        print result['toplist']
         return result
     fights = get_fights(battle_id)
     battle = get_battle_info(battle_id)
@@ -119,3 +118,19 @@ def get_battle_datas(battle_id):
         collection.insert(data)
 
     return data
+
+
+def get_active_battles():
+    active_battles = requests.get(active_battles_url).json()['battles']
+    latest_battle_id = int(active_battles[-1]['id'])
+
+    latest_battles = []
+    for i in range(1, 5):
+        latest_battles.append(
+            requests.get(battle_url % (latest_battle_id - i)).json()
+        )
+
+    return {
+        'latest_battles': latest_battles,
+        'active_battles': active_battles,
+    }

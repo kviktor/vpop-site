@@ -23,9 +23,10 @@
         <div class="input-group" style="max-width: 300px;">
           <input class="form-control" placeholder="Battle ID"/>
           <div class="input-group-btn">
-          <button class="btn btn-warning" id="clickme">
-            Show battle stats
-          </button>
+            <button class="btn btn-warning" id="clickme">
+              Show battle stats
+            </button>
+            <a href="/battle" class="btn btn-info">Battle list</a>
           </div>
         </div>
       </form>
@@ -33,7 +34,6 @@
         $(function() {
           $("form").submit(function() {
             var b = $(this).parent("div").parent("div").find("input").val();
-            if(!b) return false;
             window.location.href = "/battle/" + b;
             return false;
           });

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>List of current battles</h2>
+
+  {% for a in active %}
+  <a href="">{{ a.attacker.name }}</a> 
+  vs 
+  <a href="">{{ a.defender.name }}</a>
+
+  <a href="{{ url_for("battle", battle_id=a.id) }}" class="pull-right">
+    {{ url_for("battle", battle_id=a.id) }}
+  </a>
+  {% endfor %}
+
+  <h2>Latest battles</h2>
+  <ul>
+  {% for l in latest %}
+  <li>
+    {% if l.attacker.id == l.winner.id %}
+      <strong>
+      <a href="">{{ l.attacker.name }}</a>
+      </strong>
+    {% else %}
+      <a href="">{{ l.attacker.name }}</a>
+    {% endif %}
+    vs
+    {% if l.defender.id == l.defender.id %}
+      <strong>
+      <a href="">{{ l.defender.name }}</a>
+      </strong>
+    {% else %}
+      <a href="">{{ l.defender.name }}</a>
+    {% endif %}
+
+    <a href="{{ url_for("battle", battle_id=l.id) }}" class="pull-right">
+      {{ url_for("battle", battle_id=l.id) }}
+    </a>
+  </li>
+  {% endfor %}
+  </ul>
+
+{% endblock %}
