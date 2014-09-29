@@ -1,4 +1,4 @@
-var origin_url = "http://localhost:5000/api/";
+var origin_url = "/api/";
 
 function getAPI(url) {
   var re;
