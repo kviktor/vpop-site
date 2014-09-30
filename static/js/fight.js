@@ -50,8 +50,7 @@ function createCitizenProfile() {
   html += '<a href="http://vpopulus.net/region/' + citizen['location']['region']['id'] + '">' + citizen['location']['region']['name'] + "</a>"
   html += " / ";
   html += '<a href="http://vpopulus.net/country/' + citizen['location']['country']['id'] + '">' + citizen['location']['country']['name'] + "</a>"
-  html += ' <img class="country-logo" src="http://www.vpopulus.net/Resources/country_flags/XL/' + 
-          citizen['location']['country']['name'].replace(" ", "-") + '.png"/>';
+  html += ' <img class="country-logo" src="' + flagURL(citizen['location']['country']['name']) + '"/>';
   html += "</p>";
   html += "<p>Strength: " + citizen['military']['strength'] + "</p>";
   html += "<p>Rank: " + citizen['military']['rank-level'] + "</p>";
