@@ -5,7 +5,11 @@ $(function() {
 
   $("#citizen-id-submit").click(function() {
     var citizen_id = $("#citizen-id").val();
-    getCitizenInfo(citizen_id);
+    if(Number.isInteger(parseInt(citizen_id))) {
+      getCitizenInfo(citizen_id);
+    } else {
+      setAlertMessage('"' + citizen_id + '" is not a number.');
+    }
 
     return false;
   });
@@ -30,6 +34,10 @@ $(function() {
 function getCitizenInfo(citizen_id) {
   // company data
   citizen = getAPI("citizen/" + citizen_id);
+
+  if(!(citizen && 'id' in citizen)) {
+    return false;
+  }
 
   // create the profile
   createCitizenProfile();

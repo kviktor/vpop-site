@@ -5,7 +5,11 @@ $(function() {
 
   $("#company-id-submit").click(function() {
     var company_id = $("#company-id").val();
-    getDatas(company_id);
+    if(Number.isInteger(parseInt(company_id))) {
+      getDatas(company_id);
+    } else {
+      setAlertMessage('"' + company_id + '" is not a number.');
+    }
 
     return false;
   });
@@ -42,6 +46,10 @@ $(function() {
 function getDatas(company_id) {
   // company data
   company = getAPI("company/best_api_ever/" + company_id);
+
+  if(!(company && 'id' in company)) {
+    return false;
+  }
 
   // create better way to identify the company
   company_type_id = company['type']['id'];

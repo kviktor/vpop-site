@@ -9,6 +9,15 @@ function getAPI(url) {
       re = result;
     }
   });
+
+  if(re && 'message' in re) {
+    if('message' in re) {
+      setAlertMessage(re.message);
+    } else {
+      setAlertMessage("Unknown error.");
+    }
+  }
+
   return re;
 }
 
@@ -22,4 +31,12 @@ function flagURL(country) {
 
 function getDefaultUserAvatar() {
   return "http://www.vpopulus.net/assets/others/avatars/citizen/def.gif";
+}
+
+function setAlertMessage(message) {
+  $("#alert").html('<div class="alert alert-danger">' + message + '</div>');
+  var div = $("#alert div");
+  setTimeout(function() {
+    $(div).slideUp();
+  }, 5000);
 }
