@@ -1,24 +1,24 @@
 var origin_url = "/api/";
 
-function getAPI(url) {
+function getAPI(url, callback) {
   var re;
+  $("#loading").show();
   $.ajax({
     url: origin_url + url,
-    async: false,
     success: function(result) {
       re = result;
+
+      if(re && 'message' in re) {
+        if('message' in re) {
+          setAlertMessage(re.message);
+        } else {
+          setAlertMessage("Unknown error.");
+        }
+      }
+      $("#loading").hide();
+      callback(re);
     }
   });
-
-  if(re && 'message' in re) {
-    if('message' in re) {
-      setAlertMessage(re.message);
-    } else {
-      setAlertMessage("Unknown error.");
-    }
-  }
-
-  return re;
 }
 
 function makeTitle(string) {

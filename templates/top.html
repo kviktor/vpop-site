@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block content_header %}
   <div class="header">
     <h3>vPopulus Toplist</h3>
     <p>
@@ -22,6 +22,9 @@
       </div>
     </div>
   </form>
+{% endblock %}
+
+{% block content_content %}
   <div id="toplist">
     <table class="table">
       <thead>

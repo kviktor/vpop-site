@@ -33,16 +33,20 @@ $(function() {
 
 function getCitizenInfo(citizen_id) {
   // company data
-  citizen = getAPI("citizen/" + citizen_id);
+  citizen = getAPI("citizen/" + citizen_id, createFightPage);
 
   if(!(citizen && 'id' in citizen)) {
     return false;
   }
+}
 
+function createFightPage(data) {
+  citizen = data;
   // create the profile
   createCitizenProfile();
   $("#citizen-profile").show();
 
+  $("#citizen-fight-list table tbody").html("");
   fights = 0;
   addFight();
   reCalculateFightsTable();

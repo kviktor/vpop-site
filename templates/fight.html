@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block content %}
+{% block content_header %}
   <div class="header">
     <h3>vPopulus Fight Damage Calculator</h3>
     <p>
@@ -14,8 +14,10 @@
       </div>
     </div>
   </form>
-  <hr />
+{% endblock %}
+{% block content_content %}
   <div id="citizen-profile">
+    <hr />
     <div id="citizen-profile-left">
       <img/>
     </div>
@@ -23,6 +25,7 @@
     </div>
     <div class="clearfix"></div>
   </div>
+
   <div id="citizen-fights-list">
     <hr />
     <div class="btn btn-danger" id="sum-damage"></div>
@@ -40,6 +43,4 @@
       <tbody></tbody>
     </table>      
   </div>
-  <hr />
-
 {% endblock %}

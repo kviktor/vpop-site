@@ -13,9 +13,11 @@ $(function() {
 
 
 function getToplist(toplist_type) {
-  // company data
-  citizens = getAPI("top/"  + toplist_type).citizens;
+  getAPI("top/"  + toplist_type, createToplist);
+}
 
+function createToplist(data) {
+  citizens = data.citizens;
   max_val = getCitizenData(citizens[0]);
   createToplistTable();
   $("#toplist").show();

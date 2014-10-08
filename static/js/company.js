@@ -1,12 +1,13 @@
 var company;
 var workers;
+var company_id;
 
 $(function() {
 
   $("#company-id-submit").click(function() {
     var company_id = $("#company-id").val();
     if(Number.isInteger(parseInt(company_id))) {
-      getDatas(company_id);
+      getCompanyDatas(company_id);
     } else {
       setAlertMessage('"' + company_id + '" is not a number.');
     }
@@ -43,14 +44,13 @@ $(function() {
 
 
 
-function getDatas(company_id) {
+function getCompanyDatas(company_id) {
   // company data
-  company = getAPI("company/best_api_ever/" + company_id);
+  getAPI("company/best_api_ever/" + company_id, createCompanyProfile);
+}
 
-  if(!(company && 'id' in company)) {
-    return false;
-  }
-
+function createCompanyProfile(data) {
+  company = data;
   // create better way to identify the company
   company_type_id = company['type']['id'];
   if([1, 3, 5, 7, 9].indexOf(company_type_id) != -1)
@@ -65,8 +65,11 @@ function getDatas(company_id) {
   $("#company-profile").show();
 
   // workers data
-  workers = getAPI("company/employees/" + company_id).employees
+  getAPI("company/employees/" + company.id, createCompanyWorkers);
+}
 
+function createCompanyWorkers(data) {
+  workers = data.employees 
   // create the table
   createTable();
 
@@ -86,14 +89,17 @@ function getDatas(company_id) {
   api_url = "market/" + company['location']['country']['id'] +
             "/" + company['type']['id'] + "/" + company['quality'];
 
+  getAPI(api_url, createUnitMinPrice);
+}
+
+function createUnitMinPrice(data) {
   var min_price;
   try {
-    min_price = getAPI(api_url).offers[0]['price'];
+    min_price = data.offers[0]['price'];
   } catch(err) {
     min_price = 0;
   }
   $("#unit-price").val(min_price).trigger("input");
-
 
   // get the current price of the raw from the market if need
   if(company['skill_type'] != "land") {
@@ -109,14 +115,18 @@ function getDatas(company_id) {
     api_url = "market/" + company['location']['country']['id'] +
               "/" + raw_id + "/" + 1;
 
-    
-    try {
-      min_price = getAPI(api_url).offers[0]['price'];
-    } catch(err) {
-      min_price = 0;
-    }
-    $("#raw-price").val(min_price).trigger("input");
+    getAPI(api_url, createRawMinPrice);
   }
+}
+
+function createRawMinPrice(data) {
+  var min_price;
+  try {
+    min_price = data.offers[0]['price'];
+  } catch(err) {
+    min_price = 0;
+  }
+  $("#raw-price").val(min_price).trigger("input");
 }
 
 
