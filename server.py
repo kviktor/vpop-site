@@ -48,26 +48,34 @@ def battle(battle_id):
 API_URL = "http://api.vpopulus.net/v1/feeds/"
 
 
+def query_api(url):
+    re = requests.get("%s%s" % (API_URL, url))
+    if re.status_code != 200:
+        return {'message': "API is down."}
+    else:
+        return re.json()
+
+
 @app.route("/api/top/<order_by>")
 def api_top(order_by):
-    re = requests.get(API_URL + "all-citizens.json?order-by=%s" % order_by)
-    return jsonify(re.json())
+    data = query_api("all-citizens.json?order-by=%s" % order_by)
+    return jsonify(data)
 
 
 @app.route("/api/citizen/<int:citizen_id>")
 def api_citizen(citizen_id):
-    re = requests.get(API_URL + "citizen.json?id=%d" % citizen_id)
-    return jsonify(re.json())
+    data = query_api("citizen.json?id=%d" % citizen_id)
+    return jsonify(data)
 
 
 @app.route("/api/company/<query_type>/<int:company_id>")
 def api_company(query_type, company_id):
     if query_type == "employees":
-        link = API_URL + "company/employees.json?id=%d"
+        link = "company/employees.json?id=%d"
     else:
-        link = API_URL + "company.json?id=%d"
-    re = requests.get(link % company_id)
-    return jsonify(re.json())
+        link = "company.json?id=%d"
+    data = query_api(link % company_id)
+    return jsonify(data)
 
 
 @app.route("/api/market/<int:country>/<int:industry>/<int:quality>")
