@@ -19,9 +19,9 @@
       </a>
     </p>
     <p>
-      <form>
+      <form action="{{ url_for("battle_list") }}">
         <div class="input-group" style="max-width: 300px;">
-          <input class="form-control" placeholder="Battle ID"/>
+          <input class="form-control" name="battle_id" placeholder="Battle ID"/>
           <div class="input-group-btn">
             <button class="btn btn-warning" id="clickme">
               Show battle stats
@@ -30,15 +30,6 @@
           </div>
         </div>
       </form>
-      <script>
-        $(function() {
-          $("form").submit(function() {
-            var b = $(this).parent("div").parent("div").find("input").val();
-            window.location.href = "/battle/" + b;
-            return false;
-          });
-        });
-      </script>
     </p>
   </div>
 {% endblock %}
