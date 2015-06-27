@@ -1,9 +1,9 @@
 var company;
 var workers;
 var company_id;
+var fixed;
 
 $(function() {
-
   $("#company-id-submit").click(function() {
     var company_id = $("#company-id").val();
     if(Number.isInteger(parseInt(company_id))) {
@@ -12,6 +12,7 @@ $(function() {
       setAlertMessage('"' + company_id + '" is not a number.');
     }
 
+    window.location.hash = company_id;
     return false;
   });
 
@@ -33,12 +34,23 @@ $(function() {
     reCalculateTable();
   });
 
+  $("#construction_select").change(function() {
+    reCalculateProduction();
+    reCalculateTable();
+  });
+
   $("#add-worker").click(function() {
     addDefaultWorker();
     reCalculateProduction();
     reCalculateTable();
     return false;
   });
+
+  hash = window.location.hash;
+  if(hash) {
+    $("#company-id").val(hash.substr(1)); 
+    $("#company-id-submit").click();
+  }
 
 });
 
@@ -59,6 +71,15 @@ function createCompanyProfile(data) {
     company['skill_type'] = "manu";
   else
     company['skill_type'] = "cons";
+
+  // 
+  if(company['skill_type'] === "cons") {
+    $("#construction_select").show();
+    fixed = 5;
+  } else {
+    $("#construction_select").hide();
+    fixed = 3;
+  }
 
   // workaround for type.name being null
   if(!company['type']['name'])
@@ -278,8 +299,8 @@ function reCalculateProduction() {
     var wellness = $(".worker-wellness", this).val();
     var production = calculateProduction(wellness, skill);
     var units = getUnitsFromProduction(production);
-    $(".worker-prod", this).val(production.toFixed(3));
-    $(".worker-units", this).val(units.toFixed(3));
+    $(".worker-prod", this).val(production.toFixed(fixed));
+    $(".worker-units", this).val(units.toFixed(fixed));
 
     if(company['skill_type'] != "land") {
       var raws = production * company['quality'];
@@ -291,9 +312,13 @@ function reCalculateProduction() {
     sum_units += units;
   });
 
-  $("#sum-prod").html(sum_prod.toFixed(3));
-  $("#sum-units").html(sum_units.toFixed(3));
+  $("#sum-prod").html(sum_prod.toFixed(fixed));
+  $("#sum-units").html(sum_units.toFixed(fixed));
   $("#sum-raws").html(sum_raws.toFixed(3));
+
+
+  // update days
+  $("#days_needed").html("~" + (1/sum_units).toFixed(2));
 }
 
 function getUnitsFromProduction(prod) {
@@ -305,7 +330,7 @@ function getUnitsFromProduction(prod) {
     case 10: return prod/200.0;
     case 11: return prod/2000.0;
     case 12: return prod/2000.0;
-    case 14: return prod/200.0;
+    case 14: return prod/$("#construction_select select").val();
     default: return prod;
   }
 }
