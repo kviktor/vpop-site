@@ -106,3 +106,18 @@ tfoot td .input-group:nth-child(2) {
 #construction_select {
   display: none;
 }
+
+
+.fights-table img {
+  width: 25px;
+  height: 25px;
+}
+.fights-table a {
+  text-decoration: none;
+}
+.fights-table td {
+  padding: 2px 20px;
+}
+.fights-table td:nth-child(2), .fights-table td:nth-child(3) {
+  text-align: right;
+}

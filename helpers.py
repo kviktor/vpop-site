@@ -52,12 +52,13 @@ def get_fighter_toplist(battle, fights):
                 'citizen': f['citizen'],
                 'fights': [],
                 'damage': 0,
-
+                'num_of_fights': 0,
             }
 
         tmp = f
         del tmp['citizen']
         sides[side][citizen_id]['fights'].append(tmp)
+        sides[side][citizen_id]['num_of_fights'] += 1
         sides[side][citizen_id]['damage'] += float(f['damage'])
 
     sides = {

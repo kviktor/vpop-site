@@ -12,6 +12,11 @@
       - Final wall: {{ battle.defence_points }}
     {% endif %}
   </h2>
+  {% if not battle.is_active %}
+    <p>Endet at: {{ battle['ended-at'] }}</p>
+  {% else %}
+    <p>Started at: {{ battle['started-at'] }}</p>
+  {% endif %}
   <hr />
 </div>
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -21,24 +26,40 @@
 {% block content %}
 <div class="row">
   <div class="col-sm-6">
-    <h3>Attacker side: {{ battle.att_side }} fights</h3>
+    <h3>Attacker side: {{ battle.att_side }} fights total</h3>
     <hr />
-    {% for f in toplist.side_a %}
-      <p>
-        {{ f.damage }} 
-        - <a href="http://www.vpopulus.net/citizen/{{ f.citizen.id }}">{{ f.citizen.name }}</a>
-      </p>
-    {% endfor %}
+    <table class="fights-table">
+      {% for f in toplist.side_a %}
+        <tr>
+          <td>
+            <a href="">
+              <img src="{{ f.citizen['avatar-link'] }}"/>
+              {{ f.citizen.name }}
+            </a>
+          </td>
+          <td>{{ f.num_of_fights }}</td>
+          <td>{{ f.damage|int }}</td>
+        </tr>
+      {% endfor %}
+    </table>
   </div>
   <div class="col-sm-6">
-    <h3>Defender side: {{ battle.def_side }} fights</h3>
+    <h3>Defender side: {{ battle.def_side }} fights total</h3>
     <hr />
-    {% for f in toplist.side_d %}
-      <p>
-        {{ f.damage }} 
-        - <a href="http://www.vpopulus.net/citizen/{{ f.citizen.id }}">{{ f.citizen.name }}</a>
-      </p>
-    {% endfor %}
+    <table class="fights-table">
+      {% for f in toplist.side_d %}
+        <tr>
+          <td>
+            <a href="">
+              <img src="{{ f.citizen['avatar-link'] }}"/>
+              {{ f.citizen.name }}
+            </a>
+          </td>
+          <td>{{ f.num_of_fights }}</td>
+          <td>{{ f.damage|int }}</td>
+        </tr>
+      {% endfor %}
+    </table>
   </div>
 </div>
 {% endblock %}
