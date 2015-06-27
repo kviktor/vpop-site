@@ -7,8 +7,15 @@ $(function() {
     toplist_type = $("#toplist-type :selected").val();
     getToplist(toplist_type);
 
+    window.location.hash = toplist_type
     return false;
   });
+  hash = window.location.hash;
+  if(hash) {
+    $('#toplist-type option[value="' + hash.substring(1) + '"]')
+    .prop("selected", true);
+    $("#show-submit").click();
+  }
 });
 
 
