@@ -62,9 +62,9 @@ def api_top(order_by):
     return jsonify(data)
 
 
-@app.route("/api/citizen/<int:citizen_id>")
-def api_citizen(citizen_id):
-    data = query_api("citizen.json?id=%d" % citizen_id)
+@app.route("/api/citizen/<string:citizen_name>")
+def api_citizen(citizen_name):
+    data = query_api("citizen.json?name=%s" % citizen_name)
     return jsonify(data)
 
 

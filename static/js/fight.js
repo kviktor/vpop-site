@@ -3,14 +3,11 @@ var fights;
 
 $(function() {
 
-  $("#citizen-id-submit").click(function() {
-    var citizen_id = $("#citizen-id").val();
-    if(Number.isInteger(parseInt(citizen_id))) {
-      getCitizenInfo(citizen_id);
-    } else {
-      setAlertMessage('"' + citizen_id + '" is not a number.');
-    }
+  $("#citizen-name-submit").click(function() {
+    var citizen_name = $("#citizen-name").val();
+    getCitizenInfo(citizen_name);
 
+    window.location.hash = citizen_name;
     return false;
   });
 
@@ -28,12 +25,32 @@ $(function() {
     return false;
   });
 
+  $("#daily-fight").click(function() {
+    fights = 0;
+    $("#citizen-fights-list table tbody").html("");
+
+    for(var i=0; i<5; i++) {
+      var row = createFightTableRow(100-i*10, 1);
+      fights += 1;
+      $("#citizen-fights-list table tbody").append(row);
+    }
+    reCalculateFightsTable();
+
+    return false;
+  });
+
+  hash = window.location.hash;
+  if(hash) {
+    $("#citizen-name").val(hash.substring(1));
+    $("#citizen-name-submit").click();
+  }
+
 });
 
 
-function getCitizenInfo(citizen_id) {
+function getCitizenInfo(citizen_name) {
   // company data
-  citizen = getAPI("citizen/" + citizen_id, createFightPage);
+  citizen = getAPI("citizen/" + citizen_name, createFightPage);
 
   if(!(citizen && 'id' in citizen)) {
     return false;
@@ -46,7 +63,7 @@ function createFightPage(data) {
   createCitizenProfile();
   $("#citizen-profile").show();
 
-  $("#citizen-fight-list table tbody").html("");
+  $("#citizen-fights-list table tbody").html("");
   fights = 0;
   addFight();
   reCalculateFightsTable();
@@ -66,6 +83,7 @@ function createCitizenProfile() {
   html += "</p>";
   html += "<p>Strength: " + citizen['military']['strength'] + "</p>";
   html += "<p>Rank: " + citizen['military']['rank-level'] + "</p>";
+  html += '<img src="//www.vpopulus.net/assets/img/ico/rank/' + citizen['military']['rank-level'] + '.png" class="rank-icon"/>';
 
   $("#citizen-profile-right").html(html);
 }

@@ -37,6 +37,7 @@
 #company-profile-right,
 #citizen-profile-right {
   padding-left: 120px;
+  position: relative;
 }
 
 #company-profile, #company-list,
@@ -52,7 +53,7 @@ tfoot td .input-group:nth-child(2) {
   width: 100px;
 }
 
-#add-fight {
+#add-fight, #daily-fight {
   margin-bottom: 20px;
 }
 
@@ -120,4 +121,11 @@ tfoot td .input-group:nth-child(2) {
 }
 .fights-table td:nth-child(2), .fights-table td:nth-child(3) {
   text-align: right;
+}
+
+.rank-icon {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  max-height: 111px;
 }
