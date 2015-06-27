@@ -60,6 +60,10 @@ function createCompanyProfile(data) {
   else
     company['skill_type'] = "cons";
 
+  // workaround for type.name being null
+  if(!company['type']['name'])
+    company['type']['name'] = "cons";
+
   // create the profile
   createProfile();
   $("#company-profile").show();
@@ -301,6 +305,7 @@ function getUnitsFromProduction(prod) {
     case 10: return prod/200.0;
     case 11: return prod/2000.0;
     case 12: return prod/2000.0;
+    case 14: return prod/200.0;
     default: return prod;
   }
 }

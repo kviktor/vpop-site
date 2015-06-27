@@ -122,7 +122,7 @@ def get_battle_datas(battle_id):
 
 def get_active_battles():
     active_battles = requests.get(active_battles_url).json()['battles']
-    latest_battle_id = int(active_battles[0]['id'])
+    latest_battle_id = int(active_battles[1]['id'])
 
     latest_battles = []
     for i in range(1, 6):
