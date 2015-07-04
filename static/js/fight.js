@@ -30,8 +30,8 @@ $(function() {
     $("#citizen-fights-list table tbody").html("");
 
     for(var i=0; i<5; i++) {
-      var row = createFightTableRow(100-i*10, 1);
       fights += 1;
+      var row = createFightTableRow(100-i*10, 1);
       $("#citizen-fights-list table tbody").append(row);
     }
     reCalculateFightsTable();
