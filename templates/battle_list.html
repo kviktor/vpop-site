@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+  img {
+    height: 24px;
+  }
+</style>
   <h2>List of current battles</h2>
-
   {% for a in active %}
     <p>
-      <a href="">{{ a.attacker.name }}</a>
+      {% if a['is-resistance'] == "true" %}
+      <img src="//vpopulus.net/assets/img/ico/events/resistancew.png"/>
+      {% else %}
+      <a href="//vpopulus.net/country/{{ a.attacker.id }}">{{ a.attacker.name }}</a>
+      {% endif %}
       vs
-      <a href="">{{ a.defender.name }}</a>
+      <a href="//vpopulus.net/country/{{ a.defender.id }}">{{ a.defender.name }}</a>
+      for 
+      <a href="//vpopulus.net/region/{{ a.region.id }}">{{ a.region.name }}</a>
 
       <a href="{{ url_for("battle", battle_id=a.id) }}" class="pull-right">
         {{ url_for("battle", battle_id=a.id) }}
@@ -15,24 +25,34 @@
     </p>
   {% endfor %}
 
-  <h2>Latest battles</h2>
+  <h2>
+    Latest battles
+    {% if not request.args.num %}
+      <small><a href="?num=15">show more</a></small>
+    {% endif %}
+  </h2>
   <ul>
   {% for l in latest %}
   <li>
     {% if l.attacker.id == l.winner.id %}
       <strong>
-      <a href="">{{ l.attacker.name }}</a>
+      <a href="//vpopulus.net/country/{{ l.attacker.id }}">{{ l.attacker.name }}</a>
       </strong>
     {% else %}
-      <a href="">{{ l.attacker.name }}</a>
+      <a href="//vpopulus.net/country/{{ l.attacker.id }}">{{ l.attacker.name }}</a>
     {% endif %}
     vs
     {% if l.defender.id == l.winner.id %}
       <strong>
-      <a href="">{{ l.defender.name }}</a>
+      <a href="//vpopulus.net/country/{{ l.defender.id }}">{{ l.defender.name }}</a>
       </strong>
     {% else %}
-      <a href="">{{ l.defender.name }}</a>
+      <a href="//vpopulus.net/country/{{ l.defender.id }}">{{ l.defender.name }}</a>
+    {% endif %}
+    -
+    <a href="//vpopulus.net/region/{{ l.region.id }}">{{ l.region.name }}</a>
+    {% if l['is-resistance'] == "true" %}
+      <img src="//vpopulus.net/assets/img/ico/events/resistancew.png"/>
     {% endif %}
 
     <a href="{{ url_for("battle", battle_id=l.id) }}" class="pull-right">

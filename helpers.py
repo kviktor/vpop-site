@@ -121,12 +121,17 @@ def get_battle_datas(battle_id):
     return data
 
 
-def get_active_battles():
+def get_active_battles(num=5):
+    try:
+        num = int(num)
+        num = num if 0 < num < 21 else 5
+    except:
+        num = 5
     active_battles = requests.get(active_battles_url).json()['battles']
     latest_battle_id = int(active_battles[1]['id'])
 
     latest_battles = []
-    for i in range(1, 6):
+    for i in range(1, 1 + num):
         latest_battles.append(
             requests.get(battle_url % (latest_battle_id - i)).json()
         )

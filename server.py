@@ -32,7 +32,8 @@ def battle_list():
     if battle_id:
         return redirect(url_for("battle", battle_id=battle_id))
 
-    battles = get_active_battles()
+    num = request.args.get("num")
+    battles = get_active_battles(num)
     return render_template("battle_list.html",
                            active=battles['active_battles'],
                            latest=battles['latest_battles'])
