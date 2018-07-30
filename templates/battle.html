@@ -2,7 +2,7 @@
 
 {% block above_container %}
 <div class="container">
-  <h2> 
+  <h2>
     {% if battle.is_resistance %}
       {{ battle.defender.name }} - {{ battle.region.name }} (RW)
     {% else %}
@@ -116,7 +116,7 @@
                   'x': Date.UTC({{c.time.year}}, {{c.time.month}}, {{c.time.day}},
                        {{c.time.hour}}, {{c.time.minute}}, {{c.time.second}}),
                 },
-                {% endfor %} 
+                {% endfor %}
             ]
         }]
       });

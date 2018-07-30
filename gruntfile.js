@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     // define source files and their destinations
     uglify: {
-        files: { 
+        files: {
             src: 'static/all.js',  // source files mask
             dest: 'static/',    // destination folder
             expand: true,    // allow dynamic building

@@ -15,7 +15,7 @@ $(function() {
   $("#citizen-fights-list table tbody").on("input", ".fight-wellness", function() {
     reCalculateFightsTable();
   });
-  
+
   $("#citizen-fights-list table tbody").on("change", ".fight-weapon", function() {
     reCalculateFightsTable();
   });
@@ -114,7 +114,7 @@ function createFightTableRow(wellness, weapon) {
 }
 
 
-function addFight() { 
+function addFight() {
   fights += 1;
   var row_html = createFightTableRow(100, 1);
   $("#citizen-fights-list table tbody").append(row_html);
@@ -123,7 +123,7 @@ function addFight() {
 
 
 function reCalculateFightsTable() {
-  var sum_damage = 0;  
+  var sum_damage = 0;
   $("#citizen-fights-list table tbody tr").each(function() {
     weapon = $(".fight-weapon :selected", this).val();
     wellness = $(".fight-wellness", this).val();

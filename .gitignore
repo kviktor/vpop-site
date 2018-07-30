@@ -8,3 +8,5 @@ node_modules
 all.js
 *.min.js
 *.min.css
+*.pid
+*.log

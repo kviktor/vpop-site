@@ -23,7 +23,7 @@ $(function() {
   $("#company-list table tbody").on("input", ".worker-salary",function() {
     reCalculateTable();
   });
-  
+
   $("#company-list table tbody").on("input", ".worker-skill",function() {
     reCalculateProduction();
     reCalculateTable();
@@ -48,7 +48,7 @@ $(function() {
 
   hash = window.location.hash;
   if(hash) {
-    $("#company-id").val(hash.substr(1)); 
+    $("#company-id").val(hash.substr(1));
     $("#company-id-submit").click();
   }
 
@@ -72,7 +72,7 @@ function createCompanyProfile(data) {
   else
     company['skill_type'] = "cons";
 
-  // 
+  //
   if(company['skill_type'] === "cons") {
     $("#construction_select").show();
     fixed = 5;
@@ -94,7 +94,7 @@ function createCompanyProfile(data) {
 }
 
 function createCompanyWorkers(data) {
-  workers = data.employees 
+  workers = data.employees
   // create the table
   createTable();
 
@@ -188,11 +188,11 @@ function createTableRow(worker) {
   row += '<td><a href="http://vpopulus.net/citizen/' + worker['id'] + '">' + worker['name'] + "</a></td>";
   row += '<td><input type="number" min="0" max="100" class="form-control input-sm worker-wellness" value="'
           + worker['wellness'] + '"/></td>';
-  row += '<td><input type="text" class="form-control worker-skill input-sm" value="' + 
+  row += '<td><input type="text" class="form-control worker-skill input-sm" value="' +
           worker['skills'][company['skill_type']] + '"/></td>';
-  row += '<td><input type="text" class="form-control worker-prod input-sm" value="' + 
+  row += '<td><input type="text" class="form-control worker-prod input-sm" value="' +
           production + '" readonly/></td>';
-  row += '<td><input type="text" class="form-control worker-units input-sm" value="' + 
+  row += '<td><input type="text" class="form-control worker-units input-sm" value="' +
           units + '" readonly/></td>';
   if(company['skill_type'] != "land") {
     row += '<td><input type="text" class="form-control worker-raws input-sm" value="" readonly></td>';
@@ -251,7 +251,7 @@ function reCalculateTable() {
   var unit_price = $("#unit-price").val();
   unit_price = parseFloat(unit_price);
   if(isNaN(unit_price)) unit_price = 0;
-  
+
   // update table
   var sum_sales = 0;
   var sum_profit = 0;
@@ -263,20 +263,20 @@ function reCalculateTable() {
     if(salary == "") salary = 0.0;
     else salary = parseFloat(salary);
     var profit = sales - salary;
- 
+
     if(company['skill_type'] != "land") {
       var raws = $(".worker-raws", this).val();
       var raw_price = $("#raw-price").val();
       var raws_price = raws * raw_price;
       $(".worker-raws-price", this).prop("value", raws_price.toFixed(3));
       profit -= raws_price;
-      
+
       sum_raws_price += raws_price;
     }
-    
+
     $(".worker-sales", this).prop("value", sales.toFixed(3));
     $(".worker-profit", this).prop("value", profit.toFixed(3));
-    
+
     // calculate sums
     sum_profit += profit;
     sum_sales += sales;
@@ -323,7 +323,7 @@ function reCalculateProduction() {
 
 function getUnitsFromProduction(prod) {
   switch(company['type']['id']) {
-    case 2: return prod/2.0; 
+    case 2: return prod/2.0;
     case 4: return prod/4.0;
     case 6: return prod/5.0;
     case 8: return prod/8.0;
